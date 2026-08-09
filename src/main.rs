@@ -1,3 +1,5 @@
-fn main() {
-    println!("Hello, world!");
+pub mod gui;
+
+fn main() -> iced::Result {
+    gui::run()
 }
