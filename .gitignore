@@ -1,1 +1,30 @@
-/target
+# Rust / Cargo
+/target/
+
+# JetBrains IDEs (RustRover, IntelliJ IDEA, CLion)
+/.idea/
+*.iml
+
+# Visual Studio Code
+/.vscode/
+
+# Environment / local configuration
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary / backup files
+*.swp
+*.swo
+*~
+*.bak
+
+# Profiling / debug dumps
+*.profraw
+*.profdata
+*.dmp
