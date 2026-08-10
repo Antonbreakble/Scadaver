@@ -38,7 +38,7 @@ pub fn view(app: &Scadaver) -> Element<'_,Message> {
     match app.page {
         Page::Home => pages::home::view(),
         Page::ProjectAnalysis => pages::project_analysis::view(),
-        Page::SsrBuilder => pages::ssr_builder::view(),
+        Page::SsrBuilder => pages::ssc_builder::view(),
         Page::ScriptTransfer => pages::script_transfer::view(),
         Page::Database => pages::database::view(),
     }

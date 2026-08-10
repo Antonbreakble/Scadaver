@@ -12,7 +12,7 @@ pub fn view() -> Element<'static, Message>{
         .center_y(Fill);
 
     let content = column![
-        page_header::view("Формирование SSR файла"),
+        page_header::view("Формирование SSC файла"),
         body.padding(20).width(Fill),
     ];
 

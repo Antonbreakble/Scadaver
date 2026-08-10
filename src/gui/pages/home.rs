@@ -20,7 +20,7 @@ pub fn view() -> Element<'static, Message> {
         ),
 
         tool_card::view(
-            "Работа с SSR",
+            "Работа с SSC",
             "Анализ и работа с файлом скриптов",
             None,
         ),
