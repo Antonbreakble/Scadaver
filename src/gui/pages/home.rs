@@ -1,6 +1,6 @@
 use crate::gui::app::{Message, Page};
+use crate::gui::components::tool_card;
 use iced::widget::{
-    button,
     column,
     container,
     text,
@@ -10,57 +10,36 @@ use iced::{Element, Fill};
 pub fn view() -> Element<'static, Message> {
     let content = column!
     [
-        text("Scadaver")
-            .size(42),
+        text("Scadaver").size(42),
+        text("Инструменты для Simple-SCADA").size(18),
 
-        text("Инструменты для Simple-SCADA")
-            .size(18),
+        tool_card::view(
+            "Анализ проекта",
+            "Просмотр структуры и содержания проекта",
+            Some(Message::Navigate(Page::ProjectAnalysis))
+        ),
 
-        button(
-            column![
-                text("Анализ проекта").size(22),
-                text("Анализ структуры проекта").size(14),
-            ]
-            .spacing(5),
-        )
-        .width(Fill)
-        .height(100)
-        .on_press(Message::Navigate(Page::ProjectAnalysis)),
+        tool_card::view(
+            "Работа с SSR",
+            "Анализ и работа с файлом скриптов",
+            None,
+        ),
 
-        button(
-            column![
-                text("Сформировать SSR").size(22),
-                text("Пока недоступно").size(14),
-            ]
-            .spacing(5),
-        )
-        .width(Fill)
-        .height(100)
-        .on_press(Message::Navigate(Page::SsrBuilder)),
+        tool_card::view(
+            "Импорт / экспорт скриптов",
+            "Импорт / экспорт скриптов из одного проекта в другой",
+            None,
+        ),
 
+        tool_card::view(
+            "Работа с базой данных",
+            "Работа с базой данных",
+            None,
+        ),
 
-        button(
-            column![
-                text("Импорт / экспорт скриптов").size(22),
-                text("Пока недоступно").size(14),
-            ]
-            .spacing(5),
-        )
-        .width(Fill)
-        .height(100)
-        .on_press(Message::Navigate(Page::ScriptTransfer)),
-
-        button(
-            column![
-                text("Управление базой данных").size(22),
-                text("Пока недоступно").size(14),
-            ]
-            .spacing(5),
-        )
-        .width(Fill)
-        .height(100)
-        .on_press(Message::Navigate(Page::Database)),
-    ].spacing(16).width(550);
+    ]
+    .spacing(16)
+    .width(550);
 
     container(content)
         .width(Fill)

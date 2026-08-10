@@ -1,2 +1,2 @@
 ﻿pub mod page_header;
-mod tool_card;
+pub mod tool_card;

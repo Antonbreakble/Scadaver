@@ -1,12 +1,15 @@
-﻿use crate::gui::app::Message;
-use iced::widget::{Button, Container, button, container, stack, text};
+﻿use iced::widget::{Button, Container, button, container, stack, text};
 use iced::{Element, Fill};
+
+use crate::gui::app::Message;
+use crate::gui::styles::button::subtle_bordered;
 
 pub fn view(title: &str) -> Element<'_, Message> {
 
     let back_button : Button<Message> = button("Назад")
         .height(Fill)
         .padding([4,8])
+        .style(subtle_bordered)
         .on_press(Message::Back);
 
     let title_text : Container<Message> = container(text(title).size(24))
