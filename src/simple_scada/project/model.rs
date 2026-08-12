@@ -18,9 +18,11 @@ pub struct ProjectInfo{
     pub create_at : DelphiDateTime,
     pub version : ProjectVersion,
     pub date : ProjectDate,
+    pub version_code : Option<u32>,
+    pub project_name : String,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ProjectVersion{
     pub major : u16,
     pub minor : u16,
@@ -31,6 +33,17 @@ pub struct ProjectVersion{
 impl std::fmt::Display for ProjectVersion{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}.{}.{}.{}", self.major, self.minor, self.patch, self.build)
+    }
+}
+
+impl ProjectVersion{
+    pub fn new(major : u16,minor : u16,patch : u16, build: u16) -> Self{
+        Self{
+            major,
+            minor,
+            patch,
+            build
+        }
     }
 }
 

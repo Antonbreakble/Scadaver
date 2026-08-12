@@ -26,7 +26,10 @@ fn read_real_project_header(){
         year: 2026,
     };
 
+    let target_version_code : u32 = 2705001;
+
     assert_eq!(project.version, target_version);
     assert_eq!(project.date, build_time);
+    assert_eq!(project.version_code, Some(target_version_code));
     
 }
