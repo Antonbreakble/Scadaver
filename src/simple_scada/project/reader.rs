@@ -2,6 +2,13 @@
 use std::io::Read;
 use crate::simple_scada::project::DelphiDateTime;
 use crate::simple_scada::project::model::{ProjectDate, ProjectInfo, ProjectVersion};
+use crate::simple_scada::binary_reader::{
+    read_u8,
+    read_u16,
+    read_u32,
+    read_f64,
+    read_sized_string,
+};
 
 enum State{
     CreatedAt,
@@ -68,7 +75,7 @@ pub fn read_project(reader: &mut impl Read) -> io::Result<ProjectInfo> {
 
             State::ProjectName{ create_at, version, date, version_code} => {
                 // Пока неизвестная переменная. Поэтому просто читаем и никуда не пишем
-                read_16u(reader)?;
+                read_u16(reader)?;
 
                 let project_name = read_sized_string(reader)?;
                 State::Done(
@@ -88,61 +95,27 @@ pub fn read_project(reader: &mut impl Read) -> io::Result<ProjectInfo> {
 }
 
 fn read_created_at(reader: &mut impl Read) -> io::Result<DelphiDateTime> {
-    let created_at = read_64f(reader)?;
+    let created_at = read_f64(reader)?;
     Ok(DelphiDateTime::from(created_at))
 }
 
 fn read_version(reader: &mut impl Read) -> io::Result<ProjectVersion> {
     Ok(ProjectVersion{
-        major: read_16u(reader)?,
-        minor: read_16u(reader)?,
-        patch: read_16u(reader)?,
-        build: read_16u(reader)?,
+        major: read_u16(reader)?,
+        minor: read_u16(reader)?,
+        patch: read_u16(reader)?,
+        build: read_u16(reader)?,
     })
 }
 
 fn read_date(reader: &mut impl Read) -> io::Result<ProjectDate> {
     Ok(ProjectDate{
-        day: read_8u(reader)?,
-        month: read_8u(reader)?,
-        year: read_16u(reader)?,
+        day: read_u8(reader)?,
+        month: read_u8(reader)?,
+        year: read_u16(reader)?,
     })
 }
 
 fn read_version_code(reader: &mut impl Read) -> io::Result<u32> {
-    Ok(read_32u(reader)?)
-}
-
-fn read_sized_string(reader: &mut impl Read) -> io::Result<String> {
-    let mut len_buf = [0; 4];
-    reader.read_exact(&mut len_buf)?;
-    let len = u32::from_le_bytes(len_buf) as usize;
-
-    let mut buf = vec![0; len];
-    reader.read_exact(&mut buf)?;
-    Ok(String::from_utf8(buf).unwrap())
-}
-
-fn read_8u(reader: &mut impl Read) -> io::Result<u8> {
-    let mut buffer = [0; 1];
-    reader.read_exact(&mut buffer)?;
-    Ok(buffer[0])
-}
-
-fn read_16u(reader: &mut impl Read) -> io::Result<u16> {
-    let mut buffer = [0; 2];
-    reader.read_exact(&mut buffer)?;
-    Ok(u16::from_le_bytes(buffer))
-}
-
-fn read_32u(reader: &mut impl Read) -> io::Result<u32> {
-    let mut buffer = [0; 4];
-    reader.read_exact(&mut buffer)?;
-    Ok(u32::from_le_bytes(buffer))
-}
-
-fn read_64f(reader: &mut impl Read) -> io::Result<f64> {
-    let mut buffer = [0; 8];
-    reader.read_exact(&mut buffer)?;
-    Ok(f64::from_le_bytes(buffer))
+    Ok(read_u32(reader)?)
 }
