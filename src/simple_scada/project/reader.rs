@@ -1,5 +1,7 @@
-﻿use std::io;
-use std::io::Read;
+﻿use std::fs::File;
+use std::io;
+use std::io::{BufReader, Read};
+use std::path::{Path};
 use crate::simple_scada::project::DelphiDateTime;
 use crate::simple_scada::project::model::{ProjectDate, ProjectInfo, ProjectVersion};
 use crate::simple_scada::binary_reader::{
@@ -31,6 +33,12 @@ enum State{
         version_code: Option<u32>,
     },
     Done(ProjectInfo),
+}
+
+pub fn read_project_info(project_path: &Path, ) -> io::Result<ProjectInfo> {
+    let file = File::open(project_path.join("Project.spr"))?;
+    let mut reader = BufReader::new(file);
+    read_project(&mut reader)
 }
 
 pub fn read_project(reader: &mut impl Read) -> io::Result<ProjectInfo> {

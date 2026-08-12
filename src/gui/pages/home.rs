@@ -10,7 +10,6 @@ use iced::{Element, Fill};
 pub fn view() -> Element<'static, Message> {
     let content = column!
     [
-        text("Scadaver").size(42),
         text("Инструменты для Simple-SCADA").size(18),
 
         tool_card::view(

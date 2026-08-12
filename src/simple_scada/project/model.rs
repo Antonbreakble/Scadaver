@@ -1,5 +1,7 @@
-﻿use std::path::PathBuf;
+﻿use std::fmt;
+use std::path::PathBuf;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ProjectEntry{
@@ -13,7 +15,7 @@ impl std::fmt::Display for ProjectEntry{
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct ProjectInfo{
     pub create_at : DelphiDateTime,
     pub version : ProjectVersion,
@@ -22,7 +24,7 @@ pub struct ProjectInfo{
     pub project_name : String,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct ProjectVersion{
     pub major : u16,
     pub minor : u16,
@@ -47,7 +49,7 @@ impl ProjectVersion{
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct ProjectDate{
     pub day : u8,
     pub month : u8,
@@ -60,7 +62,7 @@ impl std::fmt::Display for ProjectDate{
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Default, Debug, Clone, Copy)]
 pub struct DelphiDateTime{
     raw: f64
 }
@@ -86,5 +88,16 @@ impl DelphiDateTime{
         } else {
             UNIX_EPOCH.checked_sub(Duration::from_secs_f64(-seconds))
         }
+    }
+}
+
+impl fmt::Display for DelphiDateTime {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let Some(system_time) = self.to_system_time()
+        else {
+            return write!(f, "Некорректная дата");
+        };
+        let datetime: DateTime<Utc> = system_time.into();
+        write!(f, "{}", datetime.format("%d.%m.%Y %H:%M:%S"))
     }
 }

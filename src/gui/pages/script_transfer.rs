@@ -1,5 +1,4 @@
 use crate::gui::app::Message;
-use crate::gui::components::page_header;
 use iced::widget::{Container, column, container, text};
 use iced::{Element, Fill};
 
@@ -12,7 +11,6 @@ pub fn view() -> Element<'static, Message>{
     .center_y(Fill);
     
     let content = column![
-        page_header::view("Экспорт / Импорт скриптов"),
         body.padding(20).width(Fill),
     ];
 

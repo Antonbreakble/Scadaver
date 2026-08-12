@@ -1,10 +1,12 @@
 [package]
 name = "Scadaver"
-version = "0.1.0"
+version = "0.2.0-alpha.1"
 edition = "2024"
 
 [dependencies]
 iced = { version = "0.14", features = ["image"] }
+rfd = "0.17"
+chrono = "0.4"
 
 [dev-dependencies]
 tempfile = "3"

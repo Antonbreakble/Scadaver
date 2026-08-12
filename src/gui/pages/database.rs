@@ -1,5 +1,4 @@
 use crate::gui::app::Message;
-use crate::gui::components::page_header;
 use iced::widget::{
     column,
     container,
@@ -16,7 +15,6 @@ pub fn view() -> Element<'static, Message>{
     .center_y(Fill);
 
     let content = column![
-        page_header::view("Управление базами данных"),
         body.padding(20).width(Fill),
     ];
 
